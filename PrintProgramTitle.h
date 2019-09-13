@@ -52,8 +52,8 @@ int ScanVariableDouble (double *const variable,
 }
 
 
-bool ScanAndCheckVariableDouble (double *const inputVariablePtr,
-                                 const char *const inputVariablesName) {
+bool ScanAndCheckVariableDouble (double * inputVariablePtr,
+                                 const char * inputVariablesName) {
     assert (inputVariablePtr != NULL);
     assert (inputVariablesName != NULL);
 

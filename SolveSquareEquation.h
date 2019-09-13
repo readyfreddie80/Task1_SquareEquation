@@ -61,6 +61,11 @@ int SolveSquareEquation (const double a, const double b, const double c,
     }
 
     double D = b * b - 4 * a * c;
+
+    if(D < 0) {
+        return 0;
+    }
+
     double denominator = 2 * a;
 
     if (D == 0) {
@@ -73,17 +78,8 @@ int SolveSquareEquation (const double a, const double b, const double c,
         *x2 = (-b + sqrtD) / denominator;
         return 2;
     }
-
-
-
-
-
-
-
-
-
 }
 
-
-
 #endif //TASK1_SQUAREEQUATION_SOLVESQUAREEQUATION_H
+
+
