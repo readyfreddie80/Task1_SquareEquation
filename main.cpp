@@ -24,8 +24,8 @@ int main () {
     double *inputVariables[M_INPUT_VAR_NUMBER] = {&a, &b, &c};
 
     for (int i = 0; i < M_INPUT_VAR_NUMBER; i++) {
-        ScanVariableDouble(inputVariables[i],
-                           inputVariablesNames[i]);
+        ScanVariableDouble (inputVariables[i],
+                            inputVariablesNames[i]);
 
 
         printf ("# Entered value: %s = %lf\n",

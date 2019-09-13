@@ -17,7 +17,7 @@ int SolveLinearEquation (const double a, const double b, double *const x) {
     assert (std::isfinite (a));
     assert (std::isfinite (b));
 
-    assert(x != NULL);
+    assert (x != NULL);
 
     if (a == 0) {
         if (b == 0) {
@@ -62,7 +62,7 @@ int SolveSquareEquation (const double a, const double b, const double c,
 
     double D = b * b - 4 * a * c;
 
-    if(D < 0) {
+    if (D < 0) {
         return 0;
     }
 
