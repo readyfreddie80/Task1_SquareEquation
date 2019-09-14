@@ -8,9 +8,16 @@
 #include <assert.h>
 #include <cmath>
 #include <math.h>
+#include <stdio.h>
 
 #define INF -1
 
+
+void swapDouble (double *x, double *y){
+    double z = *x;
+    *x = *y;
+    *y = z;
+}
 
 // Finds the solution of the equation ax + b = 0
 int SolveLinearEquation (const double a, const double b, double *const x) {
@@ -49,15 +56,18 @@ int SolveSquareEquation (const double a, const double b, const double c,
     }
 
     if (c == 0) {
-        SolveLinearEquation(a, b, x1);
-        if (*x1 == 0) {
+        *x1 = 0;
+
+        if (b == 0) {
             return 1;
         }
-        else { /* if (x1 != 0) */
-            *x2 = 0;
-            return 2;
-        }
 
+        SolveLinearEquation(a, b, x2);
+
+        if(*x1 > *x2) {
+            swapDouble(x1, x2);
+        }
+        return 2;
     }
 
     double D = b * b - 4 * a * c;
@@ -80,6 +90,83 @@ int SolveSquareEquation (const double a, const double b, const double c,
     }
 }
 
+
+int SolveSquareEquationUnitTest (const double a, const double b, const double c, const int expetedNRoots,
+                                 double expectedX1 = NAN, double expectedX2 = NAN) {
+
+
+    if (expetedNRoots == 2 && expectedX1 > expectedX2) {
+        swapDouble(&expectedX1, &expectedX2);
+    }
+
+    double x1 = NAN, x2 = NAN;
+
+    int nRoots = SolveSquareEquation (a, b, c, &x1, &x2);
+
+
+    bool isFailure = false;
+
+    if (nRoots != expetedNRoots) {
+        isFailure = true;
+    }
+    else if (nRoots != INF) {
+        if (nRoots > 0 && x1 != expectedX1) {
+            isFailure = true;
+        }
+        else if (nRoots > 1 && x2 != expectedX2) {
+            isFailure = true;
+        }
+    }
+
+
+    if (isFailure) {
+        printf("# SolveSquareEquationUnitTest(): ERROR\n"
+               "# If a = %lf, b = %lf, c = %lf\n\n", a, b, c);
+
+        printf("# Expected value: nRoots = %d\n"
+               "# Actual value:   nRoota = %d\n\n",
+               expetedNRoots, nRoots);
+
+        printf("# Expected value: x1 = %lf\n"
+               "# Actual value:   x1 = %lf\n\n",
+               x1, expectedX1);
+
+        printf("# Expected value: x2 = %lf\n"
+               "# Actual value:   x2 = %lf\n\n",
+               x2, expectedX2);
+
+        abort();
+    }
+
+    return  0;
+}
+
+void UnitTests () {
+
+    SolveSquareEquationUnitTest(0, 0, 0, INF);
+
+    SolveSquareEquationUnitTest(1, 0, 0, 1, 0);
+
+    SolveSquareEquationUnitTest(0, 1, 0, 1, 0);
+
+    SolveSquareEquationUnitTest(0, 0, 1, 0);
+
+    SolveSquareEquationUnitTest(0, 1, 1, 1, -1);
+
+    SolveSquareEquationUnitTest(1, 0, 1, 0);
+
+    SolveSquareEquationUnitTest(1, 0, -1, 2, -1, 1);
+
+    SolveSquareEquationUnitTest(1, 1, 0, 2, -1, 0);
+
+    SolveSquareEquationUnitTest(1, 2, -3, 2, -3, 1);
+
+    SolveSquareEquationUnitTest(4, -2, 0.25, 1, 0.25);
+
+    SolveSquareEquationUnitTest(3, 4, 5, 0, 0);
+}
+
 #endif //TASK1_SQUAREEQUATION_SOLVESQUAREEQUATION_H
+
 
 

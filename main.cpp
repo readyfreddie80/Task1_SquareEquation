@@ -19,6 +19,8 @@ int main () {
 
     PrintProgramTitle(title, author, date, description);
 
+    UnitTests();
+
     char *inputVariablesNames[M_INPUT_VAR_NUMBER] = {"a", "b", "c"};
     double a = NAN, b = NAN, c = NAN;
     double *inputVariables[M_INPUT_VAR_NUMBER] = {&a, &b, &c};
@@ -27,9 +29,8 @@ int main () {
         ScanVariableDouble (inputVariables[i],
                             inputVariablesNames[i]);
 
-
         printf ("# Entered value: %s = %lf\n",
-                inputVariablesNames[i],  *inputVariables[i]);
+                inputVariablesNames[i], *inputVariables[i]);
     }
 
     double x1 = NAN, x2 = NAN;
@@ -51,7 +52,7 @@ int main () {
             printf("# Equation ax^2 + bx + c = 0 has infinite number of roots\n");
             break;
         default:
-            printf("main(): ERROR: rootsNumber = %d\n", rootsNumber);
+            printf("# main(): ERROR: rootsNumber = %d\n", rootsNumber);
             break;
     }
 
