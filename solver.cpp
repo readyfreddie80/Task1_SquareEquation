@@ -1,16 +1,13 @@
 //
-// Created by ready on 12.09.2019.
+// Created by ready on 14.09.2019.
 //
 
-#ifndef TASK1_SQUAREEQUATION_SOLVESQUAREEQUATION_H
-#define TASK1_SQUAREEQUATION_SOLVESQUAREEQUATION_H
+#include "solver.h"
 
 #include <assert.h>
 #include <cmath>
 #include <math.h>
 #include <stdio.h>
-
-#define INF -1
 
 
 void swapDouble (double *x, double *y){
@@ -19,8 +16,18 @@ void swapDouble (double *x, double *y){
     *y = z;
 }
 
-// Finds the solution of the equation ax + b = 0
-int SolveLinearEquation (const double a, const double b, double *const x) {
+/*!
+    \brief Solve linear equation
+
+    Find roots for linear equation ax + b = 0
+
+    \param[in] a b coefficient
+    \param[in] b c coefficient
+    \param[out] x pointer to root location
+    \return number of roots or #SSE_INF_ROOTS
+ */
+int SolveLinearEquation (const double a, const double b,
+                         double *const x) {
     assert (std::isfinite (a));
     assert (std::isfinite (b));
 
@@ -28,7 +35,7 @@ int SolveLinearEquation (const double a, const double b, double *const x) {
 
     if (a == 0) {
         if (b == 0) {
-            return INF;
+            return SSE_INF_ROOTS;
         }
         else { /* if (b != 0) */
             return 0;
@@ -40,12 +47,24 @@ int SolveLinearEquation (const double a, const double b, double *const x) {
     }
 }
 
-// Finds the solution of the equation ax^2 + bx + c = 0
-int SolveSquareEquation (const double a, const double b, const double c,
+/*!
+     \brief Solve square equation
+
+     Finds the roots x1<= x2 of the equation ax^2+bx+c=0
+
+     \param[in] a a coefficient
+     \param[in] b b coefficient
+     \param[in] c c coefficient
+     \param[out] x1 pointer to first root location
+     \param[out] x2 pointer to second root location
+
+     \return number of roots or #SSE_INF_ROOTS
+ */
+ int SolveSquareEquation (const double a, const double b, const double c,
                          double *const x1, double *const x2) {
-    assert (std::isfinite (a));
-    assert (std::isfinite (b));
-    assert (std::isfinite (c));
+    assert (std::isfinite(a));
+    assert (std::isfinite(b));
+    assert (std::isfinite(c));
 
     assert (x1 != NULL);
     assert (x2 != NULL);
@@ -64,7 +83,7 @@ int SolveSquareEquation (const double a, const double b, const double c,
 
         SolveLinearEquation(a, b, x2);
 
-        if(*x1 > *x2) {
+        if (*x1 > *x2) {
             swapDouble(x1, x2);
         }
         return 2;
@@ -83,14 +102,25 @@ int SolveSquareEquation (const double a, const double b, const double c,
         return 1;
     }
     else { /* if (D != 0) */
-        double sqrtD = sqrt (D);
+        double sqrtD = sqrt(D);
         *x1 = (-b - sqrtD) / denominator;
         *x2 = (-b + sqrtD) / denominator;
         return 2;
     }
 }
 
+/*!
+     \brief Unit test function
 
+     Compares expected values with the result of SolveSquareEquation() that solves square equation
+
+     \param[in] a a coefficient
+     \param[in] b b coefficient
+     \param[in] c c coefficient
+     \param[in] expetedNRoots expected number of roots
+     \param[in] expectedX1 expected first root value
+     \param[in] expectedX2 expected second root value
+ */
 int SolveSquareEquationUnitTest (const double a, const double b, const double c, const int expetedNRoots,
                                  double expectedX1 = NAN, double expectedX2 = NAN) {
 
@@ -109,7 +139,7 @@ int SolveSquareEquationUnitTest (const double a, const double b, const double c,
     if (nRoots != expetedNRoots) {
         isFailure = true;
     }
-    else if (nRoots != INF) {
+    else if (nRoots != SSE_INF_ROOTS) {
         if (nRoots > 0 && x1 != expectedX1) {
             isFailure = true;
         }
@@ -141,9 +171,9 @@ int SolveSquareEquationUnitTest (const double a, const double b, const double c,
     return  0;
 }
 
-void UnitTests () {
+void SSEUnitTests() {
 
-    SolveSquareEquationUnitTest(0, 0, 0, INF);
+    SolveSquareEquationUnitTest(0, 0, 0, SSE_INF_ROOTS);
 
     SolveSquareEquationUnitTest(1, 0, 0, 1, 0);
 
@@ -165,8 +195,3 @@ void UnitTests () {
 
     SolveSquareEquationUnitTest(3, 4, 5, 0, 0);
 }
-
-#endif //TASK1_SQUAREEQUATION_SOLVESQUAREEQUATION_H
-
-
-

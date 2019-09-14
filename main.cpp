@@ -4,13 +4,17 @@
 #include <string.h>
 
 
-#include "PrintProgramTitle.h"
-#include "SolveSquareEquation.h"
+#include "programio.h"
+#include "solver.h"
 
+/// Number of input variables
 #define M_INPUT_VAR_NUMBER 3
 
+/*!
+    \brief Main function
+    Get source data and print result.
+ */
 int main () {
-
     const char title[] = "Square equation solver";
     const char author[] = "Sklyarova E V";
     const char date[] = "2019";
@@ -19,7 +23,7 @@ int main () {
 
     PrintProgramTitle(title, author, date, description);
 
-    UnitTests();
+    SSEUnitTests();
 
     char *inputVariablesNames[M_INPUT_VAR_NUMBER] = {"a", "b", "c"};
     double a = NAN, b = NAN, c = NAN;
@@ -48,7 +52,7 @@ int main () {
         case 2:
             printf("# Equation ax^2 + bx + c = 0 has two roots: x1 = %lf\n, x2 = %lf\n", x1, x2);
             break;
-        case INF:
+        case SSE_INF_ROOTS:
             printf("# Equation ax^2 + bx + c = 0 has infinite number of roots\n");
             break;
         default:
