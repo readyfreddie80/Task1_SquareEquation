@@ -6,57 +6,65 @@
 
 #include "programio.h"
 #include "solver.h"
-
-/// Number of input variables
-#define M_INPUT_VAR_NUMBER 3
+#include "templates.h"
 
 /*!
     \brief Main function
-    Get source data and print result.
+    Gets the source data and prints the result.
  */
 int main () {
-    const char title[] = "Square equation solver";
-    const char author[] = "Sklyarova E V";
-    const char date[] = "2019";
-    const char description[] = "Finds and prints roots of the equation ax^2 + bx + c = 0, "
-                               "where a, b, c - real numbers";
+    /// Number of input variables
+    const size_t M_INPUT_VAR_NUMBER = 3;
 
-    PrintProgramTitle(title, author, date, description);
+    const char TITLE_OF_THE_PROGRAM[]       = "Square equation solver";
+    const char AUTHOR_OF_THE_PROGRAM[]      = "Sklyarova E V";
+    const char DATE_OF_THE_PROGRAM[]        = "2020";
+    const char DESCRIPTION_OF_THE_PROGRAM[] = "This program finds and prints the roots of the equation ax^2 + bx + c = 0, "
+                                              "where a, b, c are real numbers";
 
-    SSEUnitTests();
+    const ProgramInfo program = {
+            TITLE_OF_THE_PROGRAM,
+            AUTHOR_OF_THE_PROGRAM,
+            DATE_OF_THE_PROGRAM,
+            DESCRIPTION_OF_THE_PROGRAM
+    };
 
-    char *inputVariablesNames[M_INPUT_VAR_NUMBER] = {"a", "b", "c"};
-    double a = NAN, b = NAN, c = NAN;
-    double *inputVariables[M_INPUT_VAR_NUMBER] = {&a, &b, &c};
+    PrintProgramInfo (&program);
+
+    SSEUnitTests ();
+
+    const char *coefNames[M_INPUT_VAR_NUMBER] = {"a", "b", "c"};
+    T a = NAN, b = NAN, c = NAN;
+    T *coefs[M_INPUT_VAR_NUMBER] = {&a, &b, &c};
 
     for (int i = 0; i < M_INPUT_VAR_NUMBER; i++) {
-        ScanVariableDouble (inputVariables[i],
-                            inputVariablesNames[i]);
+        *coefs[i] = TEMPLATE (ReadValue, T)(coefNames[i]);
 
         printf ("# Entered value: %s = %lf\n",
-                inputVariablesNames[i], *inputVariables[i]);
+                coefNames[i], *coefs[i]);
     }
 
-    double x1 = NAN, x2 = NAN;
+    T x1 = NAN, x2 = NAN;
 
-    int rootsNumber = SolveSquareEquation(a, b, c, &x1, &x2);
+    SSE_ROOTS_NUMBER rootsNumber = SolveSquareEquation (a, b, c, &x1, &x2);
 
-    printf("# If a = %lf, b = %lf, c=%lf\n", a, b, c);
+    printf ("# If a = %lf, b = %lf, c=%lf\n", a, b, c);
+
     switch (rootsNumber) {
-        case 0:
-            printf("# Equation ax^2 + bx + c = 0 has no roots\n");
+        case NO_ROOTS:
+            printf ("# Equation ax^2 + bx + c = 0 has no roots\n");
             break;
-        case 1:
-            printf("# Equation ax^2 + bx + c = 0 has one root: x = %lf\n", x1);
+        case ONE_ROOT:
+            printf ("# Equation ax^2 + bx + c = 0 has one root: x = %lf\n", x1);
             break;
-        case 2:
-            printf("# Equation ax^2 + bx + c = 0 has two roots: x1 = %lf\n, x2 = %lf\n", x1, x2);
+        case TWO_ROOTS:
+            printf ("# Equation ax^2 + bx + c = 0 has two roots: x1 = %lf, x2 = %lf\n", x1, x2);
             break;
-        case SSE_INF_ROOTS:
-            printf("# Equation ax^2 + bx + c = 0 has infinite number of roots\n");
+        case INF_ROOTS:
+            printf ("# Equation ax^2 + bx + c = 0 has infinite number of roots\n");
             break;
         default:
-            printf("# main(): ERROR: rootsNumber = %d\n", rootsNumber);
+            printf ("# main(): ERROR: rootsNumber = %d\n", rootsNumber);
             break;
     }
 

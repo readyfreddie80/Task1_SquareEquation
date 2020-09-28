@@ -1,23 +1,58 @@
 //
-// Created by ready on 11.09.2019.
+// Created by ready on 25.09.2020.
 //
 
 #ifndef TASK1_SQUAREEQUATION_PRINTPROGRAMTITLE_H
 #define TASK1_SQUAREEQUATION_PRINTPROGRAMTITLE_H
 
-#define POSITIVE_ANSWER "y"
+#include <stdio.h>
+
+#define FPRINTF_ERROR(...) \
+    fprintf(stderr, "error: %s:%d: ", __FILE__, __LINE__); \
+    fprintf(stderr, __VA_ARGS__);
 
 
-int PrintProgramTitle (const char *const title, const char *const author,
-                       const char *const date, const char *const description);
+/*!
+     \brief This struct contains the program information: title, author, date of creation, description.
+
+     All the char fields have to have a '\0' symbol.
+ */
+struct ProgramInfo {
+    const char *title;        /**< title of the program */
+    const char *author;       /**< author of the program */
+    const char *date;         /**< date of the program's creation */
+    const char *description;  /**< description of the program */
+};
+
+/*!
+     \brief Writes the program information (title, author, date of creation, description) to stdout
+
+     The format of the output:
+
+     # [title]
+     # (c) [author], [date]
+     #
+     # [description]
+
+     \return On success, returns the total number of characters written to stdout;
+     If an error occurs, a negative number is returned.
+
+     \param[in]  info   the struct ProgramInfo that contains all the program information to be written to stdout
+
+ */
+int PrintProgramInfo (const ProgramInfo *info);
 
 
-int ScanVariableDouble (double *const variable,
-                        const char *const variableName);
+/*!
+     \brief Reads a long double from the stream using strtold()
+
+     \param[in]  stream   the pointer initialized with the stream
+     \return a long double read
 
 
-bool ScanAndCheckVariableDouble (double * inputVariablePtr,
-                                 const char * inputVariablesName);
+
+ */
+long double ReadLongDouble (FILE *stream);
 
 
 #endif //TASK1_SQUAREEQUATION_PRINTPROGRAMTITLE_H

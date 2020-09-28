@@ -3,4 +3,4 @@ project(Task1_SquareEquation)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Task1_SquareEquation main.cpp programio.h solver.h programio.cpp solver.cpp)
+add_executable(Task1_SquareEquation main.cpp programio.h solver.h programio.cpp solver.cpp programio.cpp templates.h templatefuncs.cpp templatefuncs.h)
