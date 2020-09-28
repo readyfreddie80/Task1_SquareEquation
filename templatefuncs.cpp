@@ -23,20 +23,6 @@ void TEMPLATE(swap,T) (T *x, T *y) {
     *y = z;
 }
 
-/// Checks if ldValue is out of range [TYPE_MIN_LIMIT; TYPE_MAX_LIMIT]
-int isOutOfTypeRange (
-        long double ldValue,
-        T TYPE_MIN_LIMIT,
-        T TYPE_MAX_LIMIT) {
-
-    if (TYPE_MIN_LIMIT <= 0) {
-        return ldValue < TYPE_MIN_LIMIT || ldValue > TYPE_MAX_LIMIT;
-    } else {
-        return abs(ldValue) > TYPE_MAX_LIMIT || abs(ldValue) < TYPE_MIN_LIMIT;
-    }
-
-}
-
 
 /*!
      \brief Asks the user to enter to stdin a value that has the particular name and reads it
@@ -63,9 +49,9 @@ T TEMPLATE(ReadValue,T) (const char *valueName) {
     if (ldValue != 0) {
         bool isOutOfTypeRange = false;
 
-        if (TYPE_MIN_LIMIT <= 0) {
+        if (TYPE_MIN_LIMIT <= 0) { // if integer 
             isOutOfTypeRange = ldValue < TYPE_MIN_LIMIT || ldValue > TYPE_MAX_LIMIT;
-        } else {
+        } else { // if floating-point 
             isOutOfTypeRange =  abs(ldValue) > TYPE_MAX_LIMIT || abs(ldValue) < TYPE_MIN_LIMIT;
         }
 
@@ -75,7 +61,9 @@ T TEMPLATE(ReadValue,T) (const char *valueName) {
                 ldValue,
                 (LDBL)TYPE_MIN_LIMIT,
                 (LDBL)TYPE_MAX_LIMIT);
+            
                 errno = ERANGE;
+            
                 exit(errno);
         }
     }
