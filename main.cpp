@@ -40,25 +40,25 @@ int main () {
     for (int i = 0; i < M_INPUT_VAR_NUMBER; i++) {
         *coefs[i] = TEMPLATE (ReadValue, T)(coefNames[i]);
 
-        printf ("# Entered value: %s = %lf\n",
-                coefNames[i], *coefs[i]);
+        printf ("# Entered value: %s = %Lf\n",
+                coefNames[i], (LDBL)*coefs[i]);
     }
 
     T x1 = NAN, x2 = NAN;
 
     SSE_ROOTS_NUMBER rootsNumber = SolveSquareEquation (a, b, c, &x1, &x2);
 
-    printf ("# If a = %lf, b = %lf, c=%lf\n", a, b, c);
+    printf ("# If a = %Lf, b = %Lf, c=%Lf\n", (LDBL)a, (LDBL)b, (LDBL)c);
 
     switch (rootsNumber) {
         case NO_ROOTS:
             printf ("# Equation ax^2 + bx + c = 0 has no roots\n");
             break;
         case ONE_ROOT:
-            printf ("# Equation ax^2 + bx + c = 0 has one root: x = %lf\n", x1);
+            printf ("# Equation ax^2 + bx + c = 0 has one root: x = %Lf\n", (LDBL)x1);
             break;
         case TWO_ROOTS:
-            printf ("# Equation ax^2 + bx + c = 0 has two roots: x1 = %lf, x2 = %lf\n", x1, x2);
+            printf ("# Equation ax^2 + bx + c = 0 has two roots: x1 = %Lf, x2 = %Lf\n", (LDBL)x1, (LDBL)x2);
             break;
         case INF_ROOTS:
             printf ("# Equation ax^2 + bx + c = 0 has infinite number of roots\n");

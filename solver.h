@@ -13,7 +13,7 @@
  * typedef int INT;
  * typedef char CHAR;
  */
-#define T DBL
+#define T LDBL
 
 #include "templatefuncs.h"
 

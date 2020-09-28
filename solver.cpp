@@ -138,19 +138,19 @@ int SolveSquareEquationUnitTest (
 
     if (isFailure) {
         printf ("# SolveSquareEquationUnitTest(): ERROR\n"
-                "# If a = %lf, b = %lf, c = %lf\n\n", a, b, c);
+                "# If a = %Lf, b = %Lf, c = %Lf\n\n", (LDBL)a, (LDBL)b, (LDBL)c);
 
         printf ("# Expected value: nRoots = %d\n"
                 "# Actual value:   nRoota = %d\n\n",
                 expetedNRoots, nRoots);
 
-        printf ("# Expected value: x1 = %lf\n"
-                "# Actual value:   x1 = %lf\n\n",
-                x1, expectedX1);
+        printf ("# Expected value: x1 = %Lf\n"
+                "# Actual value:   x1 = %Lf\n\n",
+                (LDBL)x1, (LDBL)expectedX1);
 
-        printf ("# Expected value: x2 = %lf\n"
-                "# Actual value:   x2 = %lf\n\n",
-                x2, expectedX2);
+        printf ("# Expected value: x2 = %Lf\n"
+                "# Actual value:   x2 = %Lf\n\n",
+                (LDBL)x2, (LDBL)expectedX2);
 
         abort ();
     }

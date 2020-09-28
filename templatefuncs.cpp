@@ -60,14 +60,24 @@ T TEMPLATE(ReadValue,T) (const char *valueName) {
     const T TYPE_MAX_LIMIT = GET_TYPE_LIMIT(T, MAX);
     const T TYPE_MIN_LIMIT = GET_TYPE_LIMIT(T, MIN);
 
-    if (ldValue != 0 && isOutOfTypeRange(ldValue, TYPE_MIN_LIMIT, TYPE_MAX_LIMIT)) {
-        FPRINTF_ERROR (
+    if (ldValue != 0) {
+        bool isOutOfTypeRange = false;
+
+        if (TYPE_MIN_LIMIT <= 0) {
+            isOutOfTypeRange = ldValue < TYPE_MIN_LIMIT || ldValue > TYPE_MAX_LIMIT;
+        } else {
+            isOutOfTypeRange =  abs(ldValue) > TYPE_MAX_LIMIT || abs(ldValue) < TYPE_MIN_LIMIT;
+        }
+
+        if (isOutOfTypeRange) {
+            FPRINTF_ERROR (
                 "input value %Lf is out of range: [%Lf ; %Lf]\n",
                 ldValue,
                 (LDBL)TYPE_MIN_LIMIT,
                 (LDBL)TYPE_MAX_LIMIT);
-        errno = ERANGE;
-        exit(errno);
+                errno = ERANGE;
+                exit(errno);
+        }
     }
 
     fflush(stdin);
