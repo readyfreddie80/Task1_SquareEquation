@@ -68,8 +68,6 @@ T TEMPLATE(ReadValue,T) (const char *valueName) {
         }
     }
 
-    fflush(stdin);
-
     return (T)ldValue;
 }
 
